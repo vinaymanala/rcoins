@@ -1,0 +1,30 @@
+@import "tailwindcss";
+
+[data-tooltip]:hover::after {
+  display: block;
+  content: attr(data-tooltip);
+  position: absolute;
+  background-color: black;
+  color: white;
+  padding: 8px 12px;
+  border-radius: 5px;
+  white-space: nowrap;
+  /* bottom: 100%; */
+  top: -80%;
+  left: 40%;
+  transform: translateX(-50%);
+
+  /* visibility: hidden; */
+  animation: fade 0.2s ease-in-out forwards;
+}
+
+@keyframes fade {
+  0% {
+    opacity: 0;
+    transform: translateX(-50%) translateY(-5px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0px);
+  }
+}
