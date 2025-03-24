@@ -4,7 +4,6 @@ const Search = ({
 }: {
   onSearch: (e: any) => void;
   query: string;
-  isLoading: boolean;
 }) => {
   return (
     <input
