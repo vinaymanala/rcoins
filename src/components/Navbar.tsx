@@ -3,6 +3,8 @@ import Search from "./Search";
 import { useState } from "react";
 import { useDebounce, useEffectOnce } from "../libs/hook";
 import { getSearchQueryResult } from "../libs/services";
+import { useTheme } from "./providers/ThemeProvider";
+import { LuMoon, LuSun } from "react-icons/lu";
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -10,10 +12,10 @@ const Navbar = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [searchedItems, setSearchedItems] = useState({});
 
+  const { theme, setTheme } = useTheme();
   useEffectOnce(() => setQuery(""));
 
   const fetchCoins = async () => {
-    console.log({ query });
     try {
       const data = await getSearchQueryResult(query);
       setSearchedItems(data);
@@ -56,24 +58,43 @@ const Navbar = () => {
     }
     return (
       <div
-        className={`absolute mt-1 p-2 flex flex-col text-left w-full h-[40vh] z-10 overflow-y-scroll border-1 border-stone-200 rounded-lg  bg-stone-50`}
+        style={{
+          backgroundColor: "var(--color-bg)",
+          borderColor: "var(--color-border)",
+          color: "var(--color-fg)",
+        }}
+        className={`absolute mt-1 p-2 flex flex-col text-left w-full max-h-[40vh] z-10 overflow-y-scroll border-1  rounded-lg `}
       >
         <ul className="text-md ">
-          {coins.map((coin: any) => (
-            <li
-              onClick={() => handleRedirect(coin.api_symbol)}
-              className="flex p-2 gap-1 items-center cursor-pointer hover:bg-gray-200"
-            >
-              <img src={coin.thumb} alt={`${coin.api_symbol} logo`} />
-              <p>{`${coin.name}(${coin.symbol})`}</p>
-            </li>
-          ))}
+          {isLoading ? (
+            <p>{"Loading..."}</p>
+          ) : coins.length ? (
+            coins.map((coin: any) => (
+              <li
+                onClick={() => handleRedirect(coin.api_symbol)}
+                className="flex p-2 gap-1 items-center cursor-pointer hover-label"
+              >
+                {/* <img src={coin.thumb} alt={`${coin.api_symbol} logo`} /> */}
+                <p>{`${coin.name}(${coin.symbol})`}</p>
+              </li>
+            ))
+          ) : (
+            <p className="opacity-80 text-center">{"No results found"}</p>
+          )}
         </ul>
       </div>
     );
   };
+  const buttonLabel = `Change to ${theme === "dark" ? "light" : "dark"} theme`;
   return (
-    <nav className=" p-2 rounded-lg flex justify-between items-center bg-stone-100">
+    <nav
+      style={{
+        backgroundColor: "var(--color-bg)",
+        borderColor: "var(--color-border)",
+        color: "var(--color-fg)",
+      }}
+      className=" p-2 rounded-lg flex justify-between items-center "
+    >
       <button
         className="text-xl ml-1 font-stretch-75% font-semibold cursor-pointer"
         onClick={() => navigate("/")}
@@ -81,10 +102,27 @@ const Navbar = () => {
         rcoins
       </button>
       <div className="relative">
-        <Search onSearch={handleSearch} query={query} />
+        <Search
+          onSearch={handleSearch}
+          query={query}
+          placeholder={"Search crypto coins Ex. Bitcoin"}
+        />
         <SearchedItems data={searchedItems as {}} />
       </div>
-      <button>Toggle Theme</button>
+      <button
+        aria-label={buttonLabel}
+        type="button"
+        title={buttonLabel}
+        onClick={() => {
+          setTheme(theme === "dark" ? "light" : "dark");
+        }}
+      >
+        {theme === "dark" ? (
+          <LuSun className="text-2xl cursor-pointer mr-5" />
+        ) : (
+          <LuMoon className="text-2xl cursor-pointer mr-5 " />
+        )}
+      </button>
     </nav>
   );
 };

@@ -34,7 +34,17 @@ const PieChartGraph = ({
             )
           )}
         </Pie>
-        <Tooltip formatter={toolTipFormatter as any} />
+        <Tooltip
+          formatter={toolTipFormatter as any}
+          contentStyle={{
+            backgroundColor: "var(--color-bg)",
+            borderColor: "var(--color-border)",
+          }}
+          itemStyle={{
+            backgroundColor: "var(--color-bg)",
+            color: "var(--color-fg)",
+          }}
+        />
       </PieChart>
     </>
   );

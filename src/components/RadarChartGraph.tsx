@@ -24,11 +24,18 @@ const RadarChartGraph = ({
           <Radar
             name="Volume"
             dataKey="A"
-            stroke="#8884d8"
-            fill="#8884d8"
+            stroke="var(--color-fg)"
+            fill="#65CFBD"
             fillOpacity={0.8}
           />
-          <Tooltip formatter={toolTipFormatter as any} />
+          <Tooltip
+            formatter={toolTipFormatter as any}
+            contentStyle={{
+              backgroundColor: "var(--color-bg)",
+              color: "var(--color-fg)",
+              borderColor: "var(--color-border)",
+            }}
+          />
         </RadarChart>
       </ResponsiveContainer>
     </>

@@ -84,7 +84,7 @@ const Table = ({ data, columns }: TableProps) => {
         {Object.entries(data).map((v, i) => {
           const id = v[1].id as string;
           return (
-            <TableRow v={v} className={"hover:bg-gray-100"}>
+            <TableRow v={v} className={"hover-label"}>
               {columns.map(({ accessor }) => (
                 <TableRowData id={id} accessor={accessor} v={v} />
               ))}

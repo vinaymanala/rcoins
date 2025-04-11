@@ -42,7 +42,7 @@ const CrpyptoDashboard = () => {
   return (
     <div className="grid grid-cols-5 gap-2">
       <CryptoCurrencyInfo data={crpytocurrencyData as CryptoCurrencyData} />
-      <CryptoMetrics metaData={basicCryptoInfo} />
+      <CryptoMetrics metaData={basicCryptoInfo as CryptoCurrencyData} />
       <CrpytoLineChart
         data={cryptoGraphData as CryptoChartData}
         metaData={basicCryptoInfo}
@@ -62,7 +62,14 @@ export const CryptoCurrencyInfo = ({ data }: { data: CryptoCurrencyData }) => {
     symbol,
   } = data;
   return (
-    <div className="col-span-4 bg-stone-50 p-5 mt-2 shadow rounded-lg border-1 max-h-fit border-stone-200">
+    <div
+      style={{
+        backgroundColor: "var(--color-bg)",
+        borderColor: "var(--color-border)",
+        color: "var(--color-fg)",
+      }}
+      className="col-span-4  p-5 mt-2 shadow rounded-lg border-1 max-h-fit "
+    >
       {localization && (
         <label className="font-semibold" htmlFor="description">{`${
           localization[`en`]
@@ -127,7 +134,14 @@ export const CryptoCurrencyInfo = ({ data }: { data: CryptoCurrencyData }) => {
 };
 export const CryptoMetrics = ({ metaData }: any) => {
   return (
-    <div className="col-span-1 bg-stone-50 p-5 mt-2 shadow rounded-lg border-1 max-h-fit border-stone-200">
+    <div
+      style={{
+        backgroundColor: "var(--color-bg)",
+        borderColor: "var(--color-border)",
+        color: "var(--color-fg)",
+      }}
+      className="col-span-1 p-5 mt-2 shadow rounded-lg border-1 max-h-fit "
+    >
       <div className="flex flex-col text-center">
         <span className="text-2xl">Rank #{metaData.market_cap_rank}</span>
         <hr className="mt-2 mb-2 opacity-20" />
@@ -136,19 +150,19 @@ export const CryptoMetrics = ({ metaData }: any) => {
           id="user_votes"
           className="flex text-center justify-center items-center"
         >
-          {Math.round(metaData.sentiment_votes_up_percentage) !== 0 ? (
+          {Math.round(metaData?.sentiment_votes_up_percentage) !== 0 ? (
             <span className="pt-2 pb-2 text-xl flex items-center ">
-              {metaData.sentiment_votes_up_percentage.toFixed(2)}{" "}
+              {metaData?.sentiment_votes_up_percentage?.toFixed(2)}{" "}
               <span className="ml-2 text-green-500 text-3xl">&#8593;</span>
             </span>
           ) : null}
-          {Math.round(metaData.sentiment_votes_up_percentage) === 0 ||
-          Math.round(metaData.sentiment_votes_down_percentage) === 0 ? null : (
+          {Math.round(metaData?.sentiment_votes_up_percentage) === 0 ||
+          Math.round(metaData?.sentiment_votes_down_percentage) === 0 ? null : (
             <hr className=" mt-6 mb-2 opacity-20 rotate-90 w-10" />
           )}
-          {Math.round(metaData.sentiment_votes_down_percentage) !== 0 ? (
+          {Math.round(metaData?.sentiment_votes_down_percentage) !== 0 ? (
             <span className="pt-2 pb-2 text-xl flex items-center ">
-              {metaData.sentiment_votes_down_percentage.toFixed(2)}
+              {metaData?.sentiment_votes_down_percentage?.toFixed(2)}
               <span className="ml-2 text-red-500 text-3xl">&#8595;</span>
             </span>
           ) : null}
@@ -207,7 +221,14 @@ export const CrpytoLineChart = ({
     labels,
   };
   return (
-    <div className="col-span-5 bg-stone-50 p-5 mt-2 shadow rounded-lg border-1 max-h-fit border-stone-200">
+    <div
+      style={{
+        backgroundColor: "var(--color-bg)",
+        borderColor: "var(--color-border)",
+        color: "var(--color-fg)",
+      }}
+      className="col-span-5  p-5 mt-2 shadow rounded-lg border-1 max-h-fit"
+    >
       {metaData && (
         <label htmlFor="lineChartGraph" className="flex mb-4">
           {metaData.image && (

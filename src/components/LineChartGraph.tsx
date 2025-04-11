@@ -35,12 +35,19 @@ const LineChartGraph = ({ data, toolTipFormatter }: any) => {
             tickFormatter={(date) => new Date(date).toLocaleDateString()}
           />
           <YAxis />
-          <Tooltip formatter={toolTipFormatter} />
+          <Tooltip
+            formatter={toolTipFormatter}
+            contentStyle={{
+              backgroundColor: "var(--color-bg)",
+              color: "var(--color-fg)",
+              borderColor: "var(--color-border)",
+            }}
+          />
           <Line
             type="monotone"
             dataKey="dp"
-            stroke="#8884d8"
-            fill="#8884d8"
+            stroke="#82ca9d"
+            fill="#82ca9d"
             name={`value `}
           />
         </LineChart>
@@ -66,7 +73,14 @@ const LineChartGraph = ({ data, toolTipFormatter }: any) => {
             tickFormatter={(date) => new Date(date).toLocaleDateString()}
           />
           <YAxis />
-          <Tooltip formatter={toolTipFormatter} />
+          <Tooltip
+            formatter={toolTipFormatter}
+            contentStyle={{
+              backgroundColor: "var(--color-bg)",
+              color: "var(--color-fg)",
+              borderColor: "var(--color-border)",
+            }}
+          />
           <Line
             type="monotone"
             dataKey="dp"
@@ -97,7 +111,14 @@ const LineChartGraph = ({ data, toolTipFormatter }: any) => {
             tickFormatter={(date) => new Date(date).toLocaleDateString()}
           />
           <YAxis />
-          <Tooltip formatter={toolTipFormatter} />
+          <Tooltip
+            formatter={toolTipFormatter}
+            contentStyle={{
+              backgroundColor: "var(--color-bg)",
+              color: "var(--color-fg)",
+              borderColor: "var(--color-border)",
+            }}
+          />
           <Area
             type="monotone"
             dataKey="dp"

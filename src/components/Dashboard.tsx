@@ -140,12 +140,20 @@ const PortfolioAllocationChart = ({ data }: { data: Top10MarketCapData }) => {
   ];
 
   const label = "Portfolio Allocation";
-  const COLORS = ["#0088FE", "#00C49F", "#FFBB28"];
+  // const COLORS = ["#0088FE", "#00C49F", "#FFBB28"];
+  const COLORS = ["#2D5C54", "#4FA193", "#65CFBD"];
 
   const toolTipFormatter = (v: string, n: string, props: any) =>
     `${props.payload.text}`;
   return (
-    <div className="bg-stone-50 border-1 border-stone-200 max-h-fit grid place-items-center rounded-lg mt-2">
+    <div
+      style={{
+        backgroundColor: "var(--color-bg)",
+        borderColor: "var(--color-border)",
+        color: "var(--color-fg)",
+      }}
+      className=" border-1  max-h-fit grid place-items-center rounded-lg mt-2"
+    >
       <PieChartGraph
         data={data01}
         label={label}
@@ -174,13 +182,20 @@ const MarketShareTrends = ({ data }: { data: GlobalMarketData }) => {
   const stackedBarChartNames = [
     {
       name: "BTC",
-      fill: "#8884d8",
+      fill: "#4FA193",
       key: "dp1",
     },
-    { name: "Altcoins", fill: "#82ca9d", key: "dp2" },
+    { name: "Altcoins", fill: "#65CFBD", key: "dp2" },
   ];
   return (
-    <div className="bg-stone-50 border-1 border-stone-200 max-h-fit grid place-items-center rounded-lg mt-2">
+    <div
+      style={{
+        backgroundColor: "var(--color-bg)",
+        borderColor: "var(--color-border)",
+        color: "var(--color-fg)",
+      }}
+      className=" border-1 max-h-fit grid place-items-center rounded-lg mt-2"
+    >
       <StackedBarChart
         data={data01}
         label={label}
@@ -208,7 +223,14 @@ const CryptoVolumeTrends = ({ data }: { data: GlobalMarketData }) => {
   const toolTipFormatter = (value: string) =>
     `${(Number(value) / 1e6).toFixed(2)}M`;
   return (
-    <div className="bg-stone-50 border-1 border-stone-200 max-h-fit grid place-items-center rounded-lg mt-2">
+    <div
+      style={{
+        backgroundColor: "var(--color-bg)",
+        borderColor: "var(--color-border)",
+        color: "var(--color-fg)",
+      }}
+      className=" border-1 max-h-fit grid place-items-center rounded-lg mt-2"
+    >
       <RadarChartGraph
         data={data01}
         label={label}
@@ -252,7 +274,14 @@ const CryptoTable = ({ data }: { data: Top10MarketCapData }) => {
   }));
 
   return (
-    <div className="bg-stone-50 max-h-fit p-5 rounded-lg border-1 border-stone-200 col-span-3">
+    <div
+      style={{
+        backgroundColor: "var(--color-bg)",
+        borderColor: "var(--color-border)",
+        color: "var(--color-fg)",
+      }}
+      className=" max-h-fit p-5 rounded-lg border-1  col-span-3"
+    >
       <Table data={tableData} columns={columns} />
     </div>
   );

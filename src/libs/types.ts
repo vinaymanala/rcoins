@@ -128,4 +128,6 @@ export type CryptoCurrencyData = {
   contract_address: string;
   watchlist_portfolio_users: number;
   last_updated: string;
+  name: string;
+  community_data: { [k: string]: string };
 };

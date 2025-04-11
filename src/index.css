@@ -1,20 +1,47 @@
 @import "tailwindcss";
 
+@theme {
+  --color-hover-bg: #fff;
+}
+#root {
+}
+
+[data-theme="light"] {
+  --color-fg: #121212;
+  --color-bg: #fff;
+  --color-tooltip-bg: #121212;
+  --color-tooltip-fg: #fff;
+  --color-border: #e7e5e4;
+  --color-hover-bg: #f3f4f6;
+}
+
+[data-theme="dark"] {
+  --color-fg: #fff;
+  /* background-color: hsl(100, 20%, 10%); */
+  --color-bg: #121212;
+  --color-tooltip-bg: #fff;
+  --color-tooltip-fg: #121212;
+  --color-border: #3e3b3b;
+  --color-hover-bg: #3e3b3b;
+}
+
+body {
+  background-color: var(--color-bg);
+  color: var(--color-fg);
+}
+
 [data-tooltip]:hover::after {
   display: block;
   content: attr(data-tooltip);
   position: absolute;
-  background-color: black;
-  color: white;
+  background-color: var(--color-tooltip-bg);
+  color: var(--color-tooltip-fg);
   padding: 8px 12px;
   border-radius: 5px;
   white-space: nowrap;
-  /* bottom: 100%; */
   top: -80%;
   left: 40%;
   transform: translateX(-50%);
-
-  /* visibility: hidden; */
   animation: fade 0.2s ease-in-out forwards;
 }
 
@@ -27,4 +54,8 @@
     opacity: 1;
     transform: translateX(-50%) translateY(0px);
   }
+}
+
+.hover-label:hover {
+  background-color: var(--color-hover-bg);
 }

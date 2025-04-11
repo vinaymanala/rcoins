@@ -1,5 +1,6 @@
 import { BarChart, XAxis, Tooltip, Bar } from "recharts";
 import { StackedBarChartProps } from "../libs/types";
+import { useState } from "react";
 
 const StackedBarChart = ({
   label,
@@ -22,7 +23,14 @@ const StackedBarChart = ({
         }}
       >
         <XAxis dataKey="name" name="MM" />
-        <Tooltip formatter={toolTipFormatter as any} />
+        <Tooltip
+          formatter={toolTipFormatter as any}
+          contentStyle={{
+            backgroundColor: "var(--color-bg)",
+            color: "var(--color-fg)",
+            borderColor: "var(--color-border)",
+          }}
+        />
         {stackedBarChartNames.map((v: { [k: string]: string }) => (
           <Bar
             key={v.name}
