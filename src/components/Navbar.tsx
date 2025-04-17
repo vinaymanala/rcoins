@@ -6,7 +6,7 @@ import { getSearchQueryResult } from "../libs/services";
 import { useTheme } from "./providers/ThemeProvider";
 import { LuMoon, LuSun } from "react-icons/lu";
 
-const Navbar = () => {
+const Navbar: React.FC = () => {
   const navigate = useNavigate();
   const [query, setQuery] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(false);

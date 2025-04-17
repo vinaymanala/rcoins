@@ -7,12 +7,17 @@ import {
   RadarChart,
 } from "recharts";
 import { RadarChartGraphProps } from "../libs/types";
+import Loader from "./Loader";
 
-const RadarChartGraph = ({
+const RadarChartGraph: React.FC<RadarChartGraphProps> = ({
   label,
   data,
   toolTipFormatter,
-}: RadarChartGraphProps) => {
+}) => {
+  const isLoading = !data || data.length === 0;
+  if (isLoading) {
+    return <Loader />;
+  }
   return (
     <>
       <label className="mt-2 text-center text-lg font-medium">{label}</label>

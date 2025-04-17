@@ -23,16 +23,18 @@ export default function ThemeProvider({
   function initializeTheme() {
     const systemDarkTheme = window.matchMedia("(prefers-color-scheme: dark)");
     const localStorageTheme = localStorage.getItem("theme");
+    console.log(localStorageTheme);
+
     let theme: Theme;
     if (localStorageTheme !== null) {
       theme = localStorageTheme as Theme;
+      return theme;
     }
 
     if (systemDarkTheme.matches === true) {
-      theme = "dark";
+      return "dark";
     }
-    theme = "light";
-    return theme;
+    return "light";
   }
 
   function renderTheme(newTheme: Theme) {

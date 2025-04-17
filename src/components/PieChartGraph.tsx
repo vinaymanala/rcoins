@@ -1,17 +1,20 @@
 import { PieChart, Pie, Cell, Tooltip } from "recharts";
 import { PieChartGraphProps } from "../libs/types";
+import Loader from "./Loader";
 
-const PieChartGraph = ({
+const PieChartGraph: React.FC<PieChartGraphProps> = ({
   label,
   data,
   toolTipFormatter,
   fillColors,
-}: PieChartGraphProps) => {
+}) => {
+  const isLoading = !data || data.length === 0;
+  if (isLoading) {
+    return <Loader />;
+  }
   return (
     <>
-      <label className="mt-2 text-center text-lg font-medium">
-        Portfolio Allocation
-      </label>
+      <label className="mt-2 text-center text-lg font-medium">{label}</label>
       <label className="mt-0 text-center text-md font-light">Recommended</label>
       <PieChart width={250} height={250}>
         <Pie

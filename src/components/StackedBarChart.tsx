@@ -1,13 +1,17 @@
 import { BarChart, XAxis, Tooltip, Bar } from "recharts";
 import { StackedBarChartProps } from "../libs/types";
-import { useState } from "react";
+import Loader from "./Loader";
 
-const StackedBarChart = ({
+const StackedBarChart: React.FC<StackedBarChartProps> = ({
   label,
   data,
   stackedBarChartNames,
   toolTipFormatter,
-}: StackedBarChartProps) => {
+}) => {
+  const isLoading = !data || data.length === 0;
+  if (isLoading) {
+    return <Loader />;
+  }
   return (
     <>
       <label className="mt-2 text-center text-lg font-medium">{label}</label>

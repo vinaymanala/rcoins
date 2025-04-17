@@ -1,12 +1,10 @@
-const Search = ({
-  onSearch,
-  query,
-  placeholder,
-}: {
+type SearchProps = {
   onSearch: (e: any) => void;
   query: string;
   placeholder: string | undefined;
-}) => {
+};
+
+const Search: React.FC<SearchProps> = ({ onSearch, query, placeholder }) => {
   return (
     <input
       style={{

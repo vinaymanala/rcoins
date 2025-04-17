@@ -11,8 +11,17 @@ import {
   AreaChart,
   Brush,
 } from "recharts";
+import { LineChartProps } from "../libs/types";
+import Loader from "./Loader";
 
-const LineChartGraph = ({ data, toolTipFormatter }: any) => {
+const LineChartGraph: React.FC<LineChartProps> = ({
+  data,
+  toolTipFormatter,
+}) => {
+  const isLoading = !data || Object.entries(data).length === 0;
+  if (isLoading) {
+    return <Loader />;
+  }
   return (
     <div id="lineChartGraph">
       <p>{`${data.labels[0]} (m)`}</p>

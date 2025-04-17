@@ -1,7 +1,9 @@
 import { useNavigate } from "react-router";
 import { TableProps } from "../libs/types";
 import "../index.css";
-const Table = ({ data, columns }: TableProps) => {
+import Loader from "./Loader";
+
+const Table: React.FC<TableProps> = ({ data, columns }) => {
   const navigate = useNavigate();
   const handleRedirectLink = (id: string) => {
     navigate(`/${id.toLocaleLowerCase()}`);
@@ -62,6 +64,10 @@ const Table = ({ data, columns }: TableProps) => {
       </td>
     );
   };
+  const isLoading = !data || Object.entries(data).length === 0;
+  if (isLoading) {
+    return <Loader />;
+  }
   return (
     <table className="table-auto text-left  w-full">
       <caption className="table-caption text-lg text-center font-medium">

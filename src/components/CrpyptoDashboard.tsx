@@ -1,9 +1,12 @@
+import { lazy, Suspense } from "react";
 import { useParams } from "react-router";
-import LineChartGraph from "./LineChartGraph";
+const LineChartGraph = lazy(() => import("./LineChartGraph"));
+
 import { useState } from "react";
 import { useEffectOnce } from "../libs/hook";
 import { CryptoChartData, CryptoCurrencyData } from "../libs/types";
 import { getCryptocurrencyData, getCryptoGraphData } from "../libs/services";
+import Loader from "./Loader";
 
 const CrpyptoDashboard = () => {
   const { cryptocurrency } = useParams();
@@ -61,6 +64,7 @@ export const CryptoCurrencyInfo = ({ data }: { data: CryptoCurrencyData }) => {
     localization,
     symbol,
   } = data;
+  const isLoading = !data || Object.entries(data).length === 0;
   return (
     <div
       style={{
@@ -70,69 +74,76 @@ export const CryptoCurrencyInfo = ({ data }: { data: CryptoCurrencyData }) => {
       }}
       className="col-span-4  p-5 mt-2 shadow rounded-lg border-1 max-h-fit "
     >
-      {localization && (
-        <label className="font-semibold" htmlFor="description">{`${
-          localization[`en`]
-        } (${symbol.toLocaleUpperCase()}) |  Genesis Date : ${new Date(
-          genesis_date
-        ).toDateString()}`}</label>
+      {!isLoading ? (
+        <>
+          {localization && (
+            <label className="font-semibold" htmlFor="description">{`${
+              localization[`en`]
+            } (${symbol.toLocaleUpperCase()}) |  Genesis Date : ${new Date(
+              genesis_date
+            ).toDateString()}`}</label>
+          )}
+          <p id="description" className="flex flex-col gap-2 mt-2">
+            {links && links[`homepage`] && (
+              <span className="font-medium">
+                <label htmlFor="homepage">Website : </label>
+                <a
+                  target="_blank"
+                  id="homepage"
+                  href={links[`homepage`]}
+                  className="hover:underline"
+                >
+                  {links[`homepage`]}
+                </a>
+              </span>
+            )}
+            {links && links[`whitepaper`] && (
+              <span className="font-medium">
+                <label htmlFor="whitepaper">Whitepaper : </label>
+                <a
+                  target="_blank"
+                  id="whitepaper"
+                  href={links[`whitepaper`]}
+                  className="hover:underline"
+                >
+                  {links[`whitepaper`]}
+                </a>
+              </span>
+            )}
+            {contract_address && (
+              <span className="font-medium">
+                <label htmlFor="contract-address">Contract address : </label>
+                <span id="contract-address">{contract_address}</span>
+              </span>
+            )}
+            {watchlist_portfolio_users && (
+              <span className="font-medium">
+                <label htmlFor="watchlist_portfolio_users">
+                  WatchList portfolio users :{" "}
+                </label>
+                <span id="watchlist_portfolio_users">
+                  {watchlist_portfolio_users}
+                </span>
+              </span>
+            )}
+            {last_updated && (
+              <span className="font-medium">
+                <label htmlFor="last_updated">Last updated at : </label>
+                <span id="last_updated">
+                  {new Date(last_updated).toUTCString()}
+                </span>
+              </span>
+            )}
+          </p>
+        </>
+      ) : (
+        <Loader />
       )}
-      <p id="description" className="flex flex-col gap-2 mt-2">
-        {links && links[`homepage`] && (
-          <span className="font-medium">
-            <label htmlFor="homepage">Website : </label>
-            <a
-              target="_blank"
-              id="homepage"
-              href={links[`homepage`]}
-              className="hover:underline"
-            >
-              {links[`homepage`]}
-            </a>
-          </span>
-        )}
-        {links && links[`whitepaper`] && (
-          <span className="font-medium">
-            <label htmlFor="whitepaper">Whitepaper : </label>
-            <a
-              target="_blank"
-              id="whitepaper"
-              href={links[`whitepaper`]}
-              className="hover:underline"
-            >
-              {links[`whitepaper`]}
-            </a>
-          </span>
-        )}
-        {contract_address && (
-          <span className="font-medium">
-            <label htmlFor="contract-address">Contract address : </label>
-            <span id="contract-address">{contract_address}</span>
-          </span>
-        )}
-        {watchlist_portfolio_users && (
-          <span className="font-medium">
-            <label htmlFor="watchlist_portfolio_users">
-              WatchList portfolio users :{" "}
-            </label>
-            <span id="watchlist_portfolio_users">
-              {watchlist_portfolio_users}
-            </span>
-          </span>
-        )}
-        {last_updated && (
-          <span className="font-medium">
-            <label htmlFor="last_updated">Last updated at : </label>
-            <span id="last_updated">
-              {new Date(last_updated).toUTCString()}
-            </span>
-          </span>
-        )}
-      </p>
     </div>
   );
 };
 export const CryptoMetrics = ({ metaData }: any) => {
+  const isLoading = !metaData || Object.entries(metaData).length === 0;
   return (
     <div
       style={{
@@ -142,41 +153,46 @@ export const CryptoMetrics = ({ metaData }: any) => {
       }}
       className="col-span-1 p-5 mt-2 shadow rounded-lg border-1 max-h-fit "
     >
-      <div className="flex flex-col text-center">
-        <span className="text-2xl">Rank #{metaData.market_cap_rank}</span>
-        <hr className="mt-2 mb-2 opacity-20" />
-        <label htmlFor="user_votes">Users voting</label>
-        <div
-          id="user_votes"
-          className="flex text-center justify-center items-center"
-        >
-          {Math.round(metaData?.sentiment_votes_up_percentage) !== 0 ? (
-            <span className="pt-2 pb-2 text-xl flex items-center ">
-              {metaData?.sentiment_votes_up_percentage?.toFixed(2)}{" "}
-              <span className="ml-2 text-green-500 text-3xl">&#8593;</span>
-            </span>
-          ) : null}
-          {Math.round(metaData?.sentiment_votes_up_percentage) === 0 ||
-          Math.round(metaData?.sentiment_votes_down_percentage) === 0 ? null : (
-            <hr className=" mt-6 mb-2 opacity-20 rotate-90 w-10" />
-          )}
-          {Math.round(metaData?.sentiment_votes_down_percentage) !== 0 ? (
-            <span className="pt-2 pb-2 text-xl flex items-center ">
-              {metaData?.sentiment_votes_down_percentage?.toFixed(2)}
-              <span className="ml-2 text-red-500 text-3xl">&#8595;</span>
-            </span>
+      {!isLoading ? (
+        <div className="flex flex-col text-center">
+          <span className="text-2xl">Rank #{metaData.market_cap_rank}</span>
+          <hr className="mt-2 mb-2 opacity-20" />
+          <label htmlFor="user_votes">Users voting</label>
+          <div
+            id="user_votes"
+            className="flex text-center justify-center items-center"
+          >
+            {Math.round(metaData?.sentiment_votes_up_percentage) !== 0 ? (
+              <span className="pt-2 pb-2 text-xl flex items-center ">
+                {metaData?.sentiment_votes_up_percentage?.toFixed(2)}{" "}
+                <span className="ml-2 text-green-500 text-3xl">&#8593;</span>
+              </span>
+            ) : null}
+            {Math.round(metaData?.sentiment_votes_up_percentage) === 0 ||
+            Math.round(metaData?.sentiment_votes_down_percentage) ===
+              0 ? null : (
+              <hr className=" mt-6 mb-2 opacity-20 rotate-90 w-10" />
+            )}
+            {Math.round(metaData?.sentiment_votes_down_percentage) !== 0 ? (
+              <span className="pt-2 pb-2 text-xl flex items-center ">
+                {metaData?.sentiment_votes_down_percentage?.toFixed(2)}
+                <span className="ml-2 text-red-500 text-3xl">&#8595;</span>
+              </span>
+            ) : null}
+          </div>
+          {metaData.community_data ? (
+            <>
+              <hr className="mt-2 mb-2 opacity-20" />
+              <label htmlFor="twitter_followers">Followers</label>
+              <span id="twitter_followers" className="text-2xl">
+                {metaData.community_data[`twitter_followers`]}
+              </span>
+            </>
           ) : null}
         </div>
-        {metaData.community_data ? (
-          <>
-            <hr className="mt-2 mb-2 opacity-20" />
-            <label htmlFor="twitter_followers">Followers</label>
-            <span id="twitter_followers" className="text-2xl">
-              {metaData.community_data[`twitter_followers`]}
-            </span>
-          </>
-        ) : null}
-      </div>
+      ) : (
+        <Loader />
+      )}
     </div>
   );
 };
@@ -220,6 +236,7 @@ export const CrpytoLineChart = ({
     totalVolumesData,
     labels,
   };
+
   return (
     <div
       style={{
@@ -229,24 +246,26 @@ export const CrpytoLineChart = ({
       }}
       className="col-span-5  p-5 mt-2 shadow rounded-lg border-1 max-h-fit"
     >
-      {metaData && (
-        <label htmlFor="lineChartGraph" className="flex mb-4">
-          {metaData.image && (
-            <img
-              className=""
-              src={metaData.image[`thumb`]}
-              alt={`${metaData.name} image`}
-            />
-          )}
-          {metaData.localization && (
-            <span className="pl-1">
-              {metaData.localization[`en`]} (
-              {metaData.symbol.toLocaleUpperCase()})
-            </span>
-          )}
-        </label>
-      )}
-      <LineChartGraph data={graphData} toolTipFormatter={toolTipFormatter} />
+      <Suspense fallback={<Loader />}>
+        {metaData && (
+          <label htmlFor="lineChartGraph" className="flex mb-4">
+            {metaData.image && (
+              <img
+                className=""
+                src={metaData.image[`thumb`]}
+                alt={`${metaData.name} image`}
+              />
+            )}
+            {metaData.localization && (
+              <span className="pl-1">
+                {metaData.localization[`en`]} (
+                {metaData.symbol.toLocaleUpperCase()})
+              </span>
+            )}
+          </label>
+        )}
+        <LineChartGraph data={graphData} toolTipFormatter={toolTipFormatter} />
+      </Suspense>
     </div>
   );
 };

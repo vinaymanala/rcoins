@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useState, lazy, Suspense } from "react";
 import {
   GlobalMarketData,
   PortfolioAllocationDistribution,
@@ -7,10 +7,12 @@ import {
 } from "../libs/types";
 import Table from "./Table";
 import { useEffectOnce } from "../libs/hook";
-import RadarChartGraph from "./RadarChartGraph";
-import StackedBarChart from "./StackedBarChart";
-import PieChartGraph from "./PieChartGraph";
+const RadarChartGraph = lazy(() => import("./RadarChartGraph"));
+const StackedBarChart = lazy(() => import("./StackedBarChart"));
+const PieChartGraph = lazy(() => import("./PieChartGraph"));
+
 import { getGlobalMarketData, getTop10MarketCap } from "../libs/services";
+import Loader from "./Loader";
 
 const Dashboard: React.FC = () => {
   const [top10MarketCap, setTop10MarketCap] = useState<Top10MarketCapData | []>(
@@ -154,12 +156,15 @@ const PortfolioAllocationChart = ({ data }: { data: Top10MarketCapData }) => {
       }}
       className=" border-1  max-h-fit grid place-items-center rounded-lg mt-2"
     >
-      <PieChartGraph
-        data={data01}
-        label={label}
-        toolTipFormatter={toolTipFormatter as any}
-        fillColors={COLORS}
-      />
+      <Suspense fallback={<Loader />}>
+        <PieChartGraph
+          label={label}
+          data={data01}
+          label={label}
+          toolTipFormatter={toolTipFormatter as any}
+          fillColors={COLORS}
+        />
+      </Suspense>
     </div>
   );
 };
@@ -196,12 +201,14 @@ const MarketShareTrends = ({ data }: { data: GlobalMarketData }) => {
       }}
       className=" border-1 max-h-fit grid place-items-center rounded-lg mt-2"
     >
-      <StackedBarChart
-        data={data01}
-        label={label}
-        stackedBarChartNames={stackedBarChartNames}
-        toolTipFormatter={toolTipFormatter as any}
-      />
+      <Suspense fallback={<Loader />}>
+        <StackedBarChart
+          data={data01}
+          label={label}
+          stackedBarChartNames={stackedBarChartNames}
+          toolTipFormatter={toolTipFormatter as any}
+        />
+      </Suspense>
     </div>
   );
 };
@@ -231,11 +238,13 @@ const CryptoVolumeTrends = ({ data }: { data: GlobalMarketData }) => {
       }}
       className=" border-1 max-h-fit grid place-items-center rounded-lg mt-2"
     >
-      <RadarChartGraph
-        data={data01}
-        label={label}
-        toolTipFormatter={toolTipFormatter as any}
-      />
+      <Suspense fallback={<Loader />}>
+        <RadarChartGraph
+          data={data01}
+          label={label}
+          toolTipFormatter={toolTipFormatter as any}
+        />
+      </Suspense>
     </div>
   );
 };
@@ -282,7 +291,9 @@ const CryptoTable = ({ data }: { data: Top10MarketCapData }) => {
       }}
       className=" max-h-fit p-5 rounded-lg border-1  col-span-3"
     >
-      <Table data={tableData} columns={columns} />
+      <Suspense fallback={<Loader />}>
+        <Table data={tableData} columns={columns} />
+      </Suspense>
     </div>
   );
 };

@@ -81,6 +81,25 @@ export type DashboardProps = {
   data: GlobalMarketData;
 };
 
+export type LineChartProps = {
+  data: {
+    priceChartData: {
+      date: Date;
+      dp: number;
+    }[];
+    marketCapsData: {
+      date: Date;
+      dp: number;
+    }[];
+    totalVolumesData: {
+      date: Date;
+      dp: number;
+    }[];
+    labels: string[];
+  };
+  toolTipFormatter: (props: string) => string;
+};
+
 export type RadarChartGraphProps = {
   label: string;
   data: RadarChartGraphData[];
