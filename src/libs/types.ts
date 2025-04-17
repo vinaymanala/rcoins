@@ -107,7 +107,7 @@ export type RadarChartGraphProps = {
 };
 
 export type PieChartGraphProps = {
-  label: string;
+  title: string;
   data: PieChartGraphData[];
   toolTipFormatter: (props: { [k: string]: { [k: string]: string } }) => string;
   fillColors: string[];

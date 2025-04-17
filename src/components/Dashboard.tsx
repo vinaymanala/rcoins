@@ -141,12 +141,11 @@ const PortfolioAllocationChart = ({ data }: { data: Top10MarketCapData }) => {
     },
   ];
 
-  const label = "Portfolio Allocation";
+  const labelledValue = "Portfolio Allocation";
   // const COLORS = ["#0088FE", "#00C49F", "#FFBB28"];
   const COLORS = ["#2D5C54", "#4FA193", "#65CFBD"];
 
-  const toolTipFormatter = (v: string, n: string, props: any) =>
-    `${props.payload.text}`;
+  const toolTipFormatter = (props: any) => `${props.payload.text}`;
   return (
     <div
       style={{
@@ -158,9 +157,8 @@ const PortfolioAllocationChart = ({ data }: { data: Top10MarketCapData }) => {
     >
       <Suspense fallback={<Loader />}>
         <PieChartGraph
-          label={label}
+          title={labelledValue}
           data={data01}
-          label={label}
           toolTipFormatter={toolTipFormatter as any}
           fillColors={COLORS}
         />

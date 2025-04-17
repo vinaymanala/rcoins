@@ -3,7 +3,7 @@ import { PieChartGraphProps } from "../libs/types";
 import Loader from "./Loader";
 
 const PieChartGraph: React.FC<PieChartGraphProps> = ({
-  label,
+  title,
   data,
   toolTipFormatter,
   fillColors,
@@ -14,7 +14,7 @@ const PieChartGraph: React.FC<PieChartGraphProps> = ({
   }
   return (
     <>
-      <label className="mt-2 text-center text-lg font-medium">{label}</label>
+      <label className="mt-2 text-center text-lg font-medium">{title}</label>
       <label className="mt-0 text-center text-md font-light">Recommended</label>
       <PieChart width={250} height={250}>
         <Pie

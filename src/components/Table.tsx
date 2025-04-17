@@ -87,7 +87,7 @@ const Table: React.FC<TableProps> = ({ data, columns }) => {
         </TableRow>
       </thead>
       <tbody>
-        {Object.entries(data).map((v, i) => {
+        {Object.entries(data).map((v) => {
           const id = v[1].id as string;
           return (
             <TableRow v={v} className={"hover-label"}>
